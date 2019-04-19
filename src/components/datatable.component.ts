@@ -142,8 +142,11 @@ export class DatatableComponent implements OnInit, DoCheck, AfterViewInit {
       optionalGetterForProp(this.treeToRelation)
   );
 
+    // CNB: Disabled as this forces the browser to layout the page and calculate dimensions in a way
+    // that causes the page to scroll randomly. Instead, recalculate asynchronously.
     // recalculate sizes/etc
-    this.recalculate();
+    // this.recalculate();
+    setTimeout(() => this.recalculate());
 
     if (this._rows && this._groupRowsBy) {
       // If a column has been specified in _groupRowsBy created a new array with the data grouped by that row
