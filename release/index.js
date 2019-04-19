@@ -1067,9 +1067,9 @@ var DataTableBodyRowComponent = /** @class */ (function () {
         return column.$$id;
     };
     DataTableBodyRowComponent.prototype.buildStylesByGroup = function () {
-        this._groupStyles['left'] = this.calcStylesByGroup('left');
-        this._groupStyles['center'] = this.calcStylesByGroup('center');
-        this._groupStyles['right'] = this.calcStylesByGroup('right');
+        this._groupStyles.left = this.calcStylesByGroup('left');
+        this._groupStyles.center = this.calcStylesByGroup('center');
+        this._groupStyles.right = this.calcStylesByGroup('right');
         this.cd.markForCheck();
     };
     DataTableBodyRowComponent.prototype.calcStylesByGroup = function (group) {
@@ -2991,6 +2991,7 @@ var DatatableComponent = /** @class */ (function () {
          * Rows that are displayed in the table.
          */
         set: function (val) {
+            var _this = this;
             this._rows = val;
             if (val) {
                 this._internalRows = val.slice();
@@ -3001,8 +3002,11 @@ var DatatableComponent = /** @class */ (function () {
             }
             // auto group by parent on new update
             this._internalRows = utils_1.groupRowsByParents(this._internalRows, utils_1.optionalGetterForProp(this.treeFromRelation), utils_1.optionalGetterForProp(this.treeToRelation));
+            // CNB: Disabled as this forces the browser to layout the page and calculate dimensions in a way
+            // that causes the page to scroll randomly. Instead, recalculate asynchronously.
             // recalculate sizes/etc
-            this.recalculate();
+            // this.recalculate();
+            setTimeout(function () { return _this.recalculate(); });
             if (this._rows && this._groupRowsBy) {
                 // If a column has been specified in _groupRowsBy created a new array with the data grouped by that row
                 this.groupedRows = this.groupArrayBy(this._rows, this._groupRowsBy);
@@ -4890,9 +4894,9 @@ var DataTableHeaderComponent = /** @class */ (function () {
         return sorts;
     };
     DataTableHeaderComponent.prototype.setStylesByGroup = function () {
-        this._styleByGroup['left'] = this.calcStylesByGroup('left');
-        this._styleByGroup['center'] = this.calcStylesByGroup('center');
-        this._styleByGroup['right'] = this.calcStylesByGroup('right');
+        this._styleByGroup.left = this.calcStylesByGroup('left');
+        this._styleByGroup.center = this.calcStylesByGroup('center');
+        this._styleByGroup.right = this.calcStylesByGroup('right');
         this.cd.detectChanges();
     };
     DataTableHeaderComponent.prototype.calcStylesByGroup = function (group) {
