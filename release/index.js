@@ -2201,7 +2201,7 @@ var DataTableSelectionComponent = /** @class */ (function () {
         var selected = [];
         if (multi || chkbox || multiClick) {
             if (event.shiftKey) {
-                selected = utils_1.selectRowsBetween([], this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
+                selected = utils_1.selectRowsBetween(event.ctrlKey || event.metaKey ? this.selected.slice() : [], this.rows, index, this.prevIndex, this.getRowSelectedIdx.bind(this));
             }
             else if (event.ctrlKey || event.metaKey || multiClick || chkbox) {
                 selected = utils_1.selectRows(this.selected.slice(), row, this.getRowSelectedIdx.bind(this));
