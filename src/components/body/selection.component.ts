@@ -39,17 +39,18 @@ export class DataTableSelectionComponent {
     const chkbox = this.selectionType === SelectionType.checkbox;
     const multi = this.selectionType === SelectionType.multi;
     const multiClick = this.selectionType === SelectionType.multiClick;
+    const appendToSelection = event.ctrlKey || event.metaKey || multiClick || chkbox;
     let selected: any[] = [];
 
     if (multi || chkbox || multiClick) {
       if (event.shiftKey) {
         selected = selectRowsBetween(
-          event.ctrlKey || event.metaKey ? [...this.selected] : [],
+          appendToSelection ? [...this.selected] : [],
           this.rows,
           index,
           this.prevIndex,
           this.getRowSelectedIdx.bind(this));
-      } else if (event.ctrlKey || event.metaKey || multiClick || chkbox) {
+      } else if (appendToSelection) {
         selected = selectRows([...this.selected], row, this.getRowSelectedIdx.bind(this));
       } else {
         selected = selectRows([], row, this.getRowSelectedIdx.bind(this));
